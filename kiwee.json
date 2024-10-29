@@ -1,0 +1,61 @@
+{
+    "serviceA": {
+        "actions": {
+            "action1.monit": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "orderId": {
+                            "type": "string"
+                        },
+                        "customerId": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "orderId",
+                        "customerId"
+                    ]
+                }
+            },
+            "action2": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "productId": {
+                            "type": "string"
+                        },
+                        "quantity": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "productId",
+                        "quantity"
+                    ]
+                }
+            }
+        }
+    },
+    "serviceB": {
+        "actions": {
+            "action3": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "paymentId": {
+                            "type": "string"
+                        },
+                        "amount": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "paymentId",
+                        "amount"
+                    ]
+                }
+            }
+        }
+    }
+}

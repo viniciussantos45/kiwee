@@ -1,0 +1,14 @@
+import { Message } from '../types';
+import { validateOrReject } from 'class-validator';
+
+export default class <%= actionClass %> {
+  async execute(message: Message<'<%= consumer %>'>) {
+    
+    await validateOrReject(message.payload);
+
+    // add your business logic here
+    
+    console.log(`Processando ação ${'<%= action %>'} para ${'<%= consumer %>'}:`, message.payload);
+    
+  }
+}

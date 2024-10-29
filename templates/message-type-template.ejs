@@ -1,0 +1,16 @@
+export type Consumers = '<%- consumers.join(
+  "' | '"
+) %>'
+
+export type Actions = {
+  <%- actions.map(action => {
+    return `${action.consumer}: '${action.actions.join("' | '")}'`
+  }).join(',\n') %>
+};
+
+// Estrutura básica de uma mensagem
+export type Message<T extends Consumers> = {
+  consumer: T;
+  action: Actions[T];
+  payload: any;
+};

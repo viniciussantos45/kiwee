@@ -1,0 +1,26 @@
+{
+  "name": "kiwee",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "generate": "node dist/generator.js"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "class-validator": "^0.14.1",
+    "ejs": "^3.1.10",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^22.8.4",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.6.3"
+  }
+}
