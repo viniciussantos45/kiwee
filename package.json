@@ -2,8 +2,14 @@
   "name": "kiwee",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "license": "MIT",
-  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "kiwee": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "generate": "node dist/generator.js"
@@ -12,15 +18,18 @@
     "ajv": "^8.17.1",
     "class-validator": "^0.14.1",
     "ejs": "^3.1.10",
+    "lodash": "^4.17.21",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.8.0"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^22.8.4",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.6.3"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

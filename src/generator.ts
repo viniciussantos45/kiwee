@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { actionToClassName, actionToKebabCase } from "./utils";
 
-class Generator {
+export class Generator {
   config: Record<string, any>;
 
   constructor(configPath: string) {
@@ -12,9 +12,9 @@ class Generator {
   }
 
   generateFiles() {
-    for (const consumer in this.config) {
-      for (const action in this.config[consumer].actions) {
-        const schema = this.config[consumer].actions[action].schema;
+    for (const consumer in this.config.consumers) {
+      for (const action in this.config.consumers[consumer].actions) {
+        const schema = this.config.consumers[consumer].actions[action].schema;
 
         // Gera tipos TypeScript para o payload com base no schema
         const typeDefinitions = this.generateTypes(
@@ -28,7 +28,7 @@ class Generator {
     }
 
     // Gera o arquivo de tipos de mensagens
-    this.generateMessageType(this.config);
+    this.generateMessageType(this.config.consumers);
   }
 
   generateMessageType(config: {

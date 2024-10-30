@@ -1,7 +1,7 @@
 import { schemaRegistry } from "./schema-registry";
 import { actionToKebabCase } from "./utils";
 
-class ConsumerDispatcher {
+export class ConsumerDispatcher {
   static async dispatch({
     consumer,
     action,
@@ -28,5 +28,3 @@ class ConsumerDispatcher {
     }
   }
 }
-
-export default ConsumerDispatcher;
