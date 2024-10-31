@@ -19,7 +19,10 @@ if (args[0] === "init") {
     );
     process.exit(1);
   }
-  fs.copyFileSync(path.resolve(__dirname, "kiwee-example.json"), configPath);
+  fs.copyFileSync(
+    path.resolve(__dirname, "templates", "kiwee-example.json"),
+    configPath
+  );
   console.log(`Configuration file created at ${configPath}.`);
 } else if (args[0] === "generator") {
   const configPath = path.resolve(process.cwd(), args[1] ?? "kiwee.json");

@@ -5,13 +5,14 @@
   "types": "dist/types/index.d.ts",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "bin": {
     "kiwee": "dist/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "node build.js && chmod +x dist/cli.js",
     "generate": "node dist/generator.js"
   },
   "dependencies": {

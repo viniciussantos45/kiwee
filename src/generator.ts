@@ -5,10 +5,18 @@ import { actionToClassName, actionToKebabCase } from "./utils";
 
 export class Generator {
   config: Record<string, any>;
+  settings: Record<string, string>;
+  outputDir: string;
 
   constructor(configPath: string) {
     const configContent = fs.readFileSync(configPath, "utf-8");
     this.config = JSON.parse(configContent);
+    this.settings = this.config.settings || {};
+    this.outputDir = path.join(
+      process.cwd(),
+      this.settings.baseDir,
+      this.settings.handlersDir ?? "generated"
+    );
   }
 
   generateFiles() {
@@ -16,18 +24,15 @@ export class Generator {
       for (const action in this.config.consumers[consumer].actions) {
         const schema = this.config.consumers[consumer].actions[action].schema;
 
-        // Gera tipos TypeScript para o payload com base no schema
         const typeDefinitions = this.generateTypes(
           actionToClassName(consumer, action),
           schema
         );
 
-        // Gera o arquivo do handler com base no template
         this.generateHandlerFile(consumer, action, typeDefinitions);
       }
     }
 
-    // Gera o arquivo de tipos de mensagens
     this.generateMessageType(this.config.consumers);
   }
 
@@ -50,13 +55,12 @@ export class Generator {
       };
     });
 
-    const outputDir = path.join(process.cwd(), "generated", "types");
+    const outputDir = path.join(this.outputDir, "types");
 
     fs.mkdirSync(outputDir, { recursive: true });
 
-    // Lê e compila o template EJS
     const templateContent = fs.readFileSync(
-      path.join(process.cwd(), "templates", "message-type-template.ejs"),
+      path.join(__dirname, "templates", "message-type-template.ejs"),
       "utf-8"
     );
 
@@ -68,7 +72,6 @@ export class Generator {
 
     const outputPath = path.join(outputDir, `index.ts`);
 
-    // Escreve o arquivo com o handler e os tipos
     fs.writeFileSync(outputPath, `${messageTypeContent}`);
   }
 
@@ -88,16 +91,14 @@ export class Generator {
     typeDefinitions: string
   ) {
     const actionClass = actionToClassName(consumer, action);
-    const outputDir = path.join(process.cwd(), "generated", consumer);
+    const outputDir = path.join(this.outputDir, consumer);
     const kebabCaseAction = actionToKebabCase(action);
     const outputPath = path.join(outputDir, `${kebabCaseAction}.ts`);
 
-    // Cria a pasta se não existir
     fs.mkdirSync(outputDir, { recursive: true });
 
-    // Lê e compila o template EJS
     const templateContent = fs.readFileSync(
-      path.join(process.cwd(), "templates", "handler-template.ejs"),
+      path.join(__dirname, "templates", "handler-template.ejs"),
       "utf-8"
     );
     const handlerContent = ejs.render(templateContent, {
@@ -106,11 +107,6 @@ export class Generator {
       actionClass,
     });
 
-    // Escreve o arquivo com o handler e os tipos
     fs.writeFileSync(outputPath, `${typeDefinitions}\n${handlerContent}`);
   }
 }
-
-// Inicializa e executa o gerador
-const generator = new Generator(path.join(process.cwd(), "kiwee.json"));
-generator.generateFiles();
