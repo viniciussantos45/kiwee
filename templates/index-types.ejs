@@ -1,0 +1,29 @@
+<% payloads.forEach(payload => { %>
+import { <%= payload.name %> } from '<%= payload.path %>';
+<% }) %>
+
+export type Consumers = '<%- consumers.join(
+  "' | '"
+) %>'
+
+export type Actions = {
+  <%- actions.map(action => {
+    return `${action.consumer}: '${action.actions.map(act => act.name).join("' | '")}'`
+  }).join(',\n') %>
+};
+
+export type Payloads = {
+  <%- actions.map(action => {
+    return `${action.consumer}: {
+      ${action.actions.map(action => {
+        return `${action.name}: ${action.payload}`
+      }).join(',\n')}
+    }`
+  }).join(',\n') %>
+};
+
+export type Message<T extends Consumers> = {
+  consumer: T;
+  action: Actions[T];
+  payload: Payloads[T][Actions[T]];
+};

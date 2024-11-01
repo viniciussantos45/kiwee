@@ -12,7 +12,7 @@ if (args.length === 0) {
   process.exit(1);
 }
 if (args[0] === "init") {
-  const configPath = path.resolve(process.cwd(), "kiwee.json");
+  const configPath = path.resolve(process.cwd(), "kiwee-config.json");
   if (fs.existsSync(configPath)) {
     console.log(
       `Configuration file already exists at ${configPath}. Please remove it and try again.`
@@ -25,7 +25,10 @@ if (args[0] === "init") {
   );
   console.log(`Configuration file created at ${configPath}.`);
 } else if (args[0] === "generator") {
-  const configPath = path.resolve(process.cwd(), args[1] ?? "kiwee.json");
+  const configPath = path.resolve(
+    process.cwd(),
+    args[1] ?? "kiwee-config.json"
+  );
   if (!fs.existsSync(configPath)) {
     console.log(
       `Configuration file not found at ${configPath}. Please execute the npx kiwee init command.`
@@ -34,7 +37,6 @@ if (args[0] === "init") {
   }
   const generator = new Generator(configPath);
   generator.generateFiles();
-  // Place generator logic here
 } else {
   console.log("Unknown command:", args[0]);
 }

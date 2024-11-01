@@ -1,6 +1,8 @@
 import ejs from "ejs";
 import fs from "fs";
 import path from "path";
+
+import { loggerPretty } from "./logs";
 import { actionToClassName, actionToKebabCase } from "./utils";
 
 export class Generator {
@@ -38,11 +40,22 @@ export class Generator {
 
   generateMessageType(config: {
     [consumer: string]: {
-      actions: string[];
-    }[];
+      actions: {
+        [action: string]: {
+          schema: {
+            properties: Record<string, { type: string }>;
+          };
+        };
+      };
+    };
   }) {
-    console.log(config);
     const consumers = Object.keys(config);
+    const payloads = consumers.flatMap((consumer) =>
+      Object.keys(config[consumer].actions).map((action) => ({
+        name: `${actionToClassName(consumer, action)}Payload`,
+        path: "../" + path.join(consumer, `${actionToKebabCase(action)}`),
+      }))
+    );
     const actions = Object.values(config).map((consumerValue, index) => {
       const consumer = Object.keys(config)[index];
       const [actions] = Object.values(consumerValue).map((action) =>
@@ -51,7 +64,10 @@ export class Generator {
 
       return {
         consumer,
-        actions,
+        actions: actions.map((action) => ({
+          name: action,
+          payload: `${actionToClassName(consumer, action)}Payload`,
+        })),
       };
     });
 
@@ -60,14 +76,14 @@ export class Generator {
     fs.mkdirSync(outputDir, { recursive: true });
 
     const templateContent = fs.readFileSync(
-      path.join(__dirname, "templates", "message-type-template.ejs"),
+      path.join(__dirname, "templates", "index-types.ejs"),
       "utf-8"
     );
 
-    console.log(consumers, actions);
     const messageTypeContent = ejs.render(templateContent, {
       consumers,
       actions,
+      payloads,
     });
 
     const outputPath = path.join(outputDir, `index.ts`);
@@ -105,8 +121,27 @@ export class Generator {
       consumer,
       action,
       actionClass,
+      payloadType: `${actionClass}Payload`,
     });
 
-    fs.writeFileSync(outputPath, `${typeDefinitions}\n${handlerContent}`);
+    if (!fs.existsSync(outputPath)) {
+      fs.writeFileSync(outputPath, `${typeDefinitions}\n${handlerContent}`);
+      console.log(
+        `Generated handler for ${loggerPretty.blue.bold(
+          consumer
+        )}:${loggerPretty.red.bold(action)} at ${loggerPretty.green.bold(
+          outputPath.replace(process.cwd(), ".")
+        )}`
+      );
+      return;
+    }
+
+    console.log(
+      `Handler for ${loggerPretty.blue.bold(consumer)}:${loggerPretty.red.bold(
+        action
+      )} already exists at ${loggerPretty.green.bold(
+        outputPath.replace(process.cwd(), ".")
+      )}. Skipping.`
+    );
   }
 }

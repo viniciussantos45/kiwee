@@ -1,5 +1,6 @@
 import Ajv, { JSONSchemaType } from "ajv";
 import { readFileSync } from "fs";
+import path from "path";
 
 const ajv = new Ajv();
 
@@ -33,22 +34,35 @@ class SchemaRegistry {
     }
   }
 
-  validate(consumer: string, action: string, payload: any) {
+  validate<TConsumer extends string, TAction extends string, TPayload>(
+    consumer: TConsumer,
+    action: TAction,
+    payload: TPayload
+  ) {
     const schema = this.schemas[consumer]?.[action];
     if (!schema) {
       throw new Error(
-        `Schema não registrado para ação ${action} do consumidor ${consumer}`
+        `Schema not registered for action ${action} of consumer ${consumer}`
       );
     }
 
     const validate = ajv.compile(schema);
     if (!validate(payload)) {
-      throw new Error(`Payload inválido: ${ajv.errorsText(validate.errors)}`);
+      throw new Error(`Invalid payload: ${ajv.errorsText(validate.errors)}`);
     }
+  }
+
+  deserialize<TConsumer extends string, TAction extends string, TPayload>(
+    message: string
+  ) {
+    return JSON.parse(message) as {
+      consumer: TConsumer;
+      action: TAction;
+      payload: TPayload;
+    };
   }
 }
 
-// Exemplo de inicialização
-export const schemaRegistry = new SchemaRegistry("./config.json");
-
-export default SchemaRegistry;
+export const schemaRegistry = new SchemaRegistry(
+  path.join(process.cwd(), "kiwee-config.json")
+);
