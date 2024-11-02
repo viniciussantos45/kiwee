@@ -1,7 +1,9 @@
 
 # Kiwee
 
-![Kiwee Logo](https://raw.githubusercontent.com/viniciussantos45/kiwee/refs/heads/main/docs/KIWEE.png)
+<center>
+  ![Kiwee Logo](https://raw.githubusercontent.com/viniciussantos45/kiwee/refs/heads/main/docs/KIWEE.png)
+</center>
 
 Kiwee is a TypeScript library for handling message serialization, validation, and dispatching between consumers and actions based on predefined schemas.
 
