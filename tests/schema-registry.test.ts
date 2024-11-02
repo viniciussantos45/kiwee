@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { SchemaRegistry } from "./schema-registry";
+import { SchemaRegistry } from "../src/schema-registry";
 
 describe("SchemaRegistry", () => {
-  const testConfigPath = path.resolve(__dirname, "test-config.json");
+  const testConfigPath = path.resolve(process.cwd(), "test-config.json");
   let schemaRegistry: SchemaRegistry;
 
   beforeAll(() => {
@@ -26,6 +26,7 @@ describe("SchemaRegistry", () => {
       },
     };
     fs.writeFileSync(testConfigPath, JSON.stringify(testConfig));
+
     schemaRegistry = new SchemaRegistry(testConfigPath);
   });
 

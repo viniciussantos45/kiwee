@@ -5,6 +5,9 @@ import path from "path";
 import { loggerPretty } from "./logs";
 import { actionToClassName, actionToKebabCase } from "./utils";
 
+const dirname =
+  process.env.NODE_ENV === "test" ? path.resolve(__dirname, "..") : __dirname;
+
 export class Generator {
   config: Record<string, any>;
   settings: Record<string, string>;
@@ -76,7 +79,7 @@ export class Generator {
     fs.mkdirSync(outputDir, { recursive: true });
 
     const templateContent = fs.readFileSync(
-      path.join(__dirname, "templates", "index-types.ejs"),
+      path.join(dirname, "templates", "index-types.ejs"),
       "utf-8"
     );
 
@@ -114,7 +117,7 @@ export class Generator {
     fs.mkdirSync(outputDir, { recursive: true });
 
     const templateContent = fs.readFileSync(
-      path.join(__dirname, "templates", "handler-template.ejs"),
+      path.join(dirname, "templates", "handler-template.ejs"),
       "utf-8"
     );
     const handlerContent = ejs.render(templateContent, {

@@ -1,59 +1,63 @@
 {
+    "settings": {
+        "baseDir": "./",
+        "handlersDir": "kiwee-example"
+    },
     "consumers": {
-        "serviceA": {
+        "exampleServiceA": {
             "actions": {
-                "action1.monit": {
+                "exampleAction1": {
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "orderId": {
+                            "exampleProperty1": {
                                 "type": "string"
                             },
-                            "customerId": {
+                            "exampleProperty2": {
                                 "type": "string"
                             }
                         },
                         "required": [
-                            "orderId",
-                            "customerId"
+                            "exampleProperty1",
+                            "exampleProperty2"
                         ]
                     }
                 },
-                "action2": {
+                "exampleAction2": {
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "productId": {
+                            "exampleProperty3": {
                                 "type": "string"
                             },
-                            "quantity": {
+                            "exampleProperty4": {
                                 "type": "number"
                             }
                         },
                         "required": [
-                            "productId",
-                            "quantity"
+                            "exampleProperty3",
+                            "exampleProperty4"
                         ]
                     }
                 }
             }
         },
-        "serviceB": {
+        "exampleServiceB": {
             "actions": {
-                "action3": {
+                "exampleAction3": {
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "paymentId": {
+                            "exampleProperty5": {
                                 "type": "string"
                             },
-                            "amount": {
+                            "exampleProperty6": {
                                 "type": "number"
                             }
                         },
                         "required": [
-                            "paymentId",
-                            "amount"
+                            "exampleProperty5",
+                            "exampleProperty6"
                         ]
                     }
                 }

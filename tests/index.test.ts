@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { actionToClassName, actionToKebabCase } from "./index";
+import { actionToClassName, actionToKebabCase } from "../src/utils/index";
 
 describe("Utils Functions", () => {
   describe("actionToClassName", () => {

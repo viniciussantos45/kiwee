@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { Generator } from "./generator";
+import { Generator } from "../src/generator";
 
 describe("Generator", () => {
   const testConfigPath = path.resolve(__dirname, "test-config.json");

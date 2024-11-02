@@ -1,3 +1,3 @@
-export * from "./dispatcher";
-export * from "./generator";
-export * from "./schema-registry";
+export { ConsumerDispatcher } from "./dispatcher";
+export { Publisher } from "./publisher";
+export { schemaRegistry } from "./schema-registry";

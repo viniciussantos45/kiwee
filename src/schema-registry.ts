@@ -16,10 +16,11 @@ interface Config {
   };
 }
 
-class SchemaRegistry {
+export class SchemaRegistry {
   private schemas: Record<string, Record<string, JSONSchemaType<any>>> = {};
 
   constructor(configPath: string) {
+    console.log(configPath);
     const config: Config = JSON.parse(readFileSync(configPath, "utf-8"));
     this.loadSchemas(config);
   }
@@ -60,6 +61,14 @@ class SchemaRegistry {
       action: TAction;
       payload: TPayload;
     };
+  }
+
+  serialize<
+    TConsumer extends string,
+    TAction extends string,
+    TPayload
+  >(message: { consumer: TConsumer; action: TAction; payload: TPayload }) {
+    return JSON.stringify(message);
   }
 }
 

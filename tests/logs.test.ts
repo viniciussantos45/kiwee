@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { describe, expect, it } from "vitest";
-import { loggerPretty } from "./logs";
+import { loggerPretty } from "../src/logs";
 
 describe("LoggerPretty", () => {
   it("should apply blue style correctly", () => {

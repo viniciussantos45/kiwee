@@ -13,9 +13,9 @@
     "kiwee": "dist/cli.js"
   },
   "scripts": {
-    "build": "node build.js && chmod +x dist/cli.js",
+    "build": "node build.js",
     "generate": "node dist/generator.js",
-    "test": "vitest"
+    "test": "NODE_ENV=test vitest"
   },
   "dependencies": {
     "ajv": "^8.17.1",
