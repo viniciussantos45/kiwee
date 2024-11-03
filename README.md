@@ -8,7 +8,7 @@ Kiwee is a TypeScript library for handling message serialization, validation, an
 ## Installation
 
 ```bash
-npm install kiwee
+npm install kiwee class-validator
 ```
 
 ## Usage
